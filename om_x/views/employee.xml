@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+    <record id="view_inherit_hr_employeer" model="ir.ui.view">
+        <field name="name">hr.employee.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="em_prenom" placeholder="Entrer Prénom"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='mobile_phone']" position="after">
+                <field name="em_matricule"/>
+            </xpath>
+
+            <xpath expr="//field[@name='em_matricule']" position="after">
+                <field name="em_cin"/>
+            </xpath>
+
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="dir_gen" />
+            </xpath>
+            <!--
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="em_direction_generale" />
+            </xpath>
+            <xpath expr="//field[@name='em_direction_generale']" position="after">
+                <field name="em_pole" />
+            </xpath>
+
+
+
+            <xpath expr="//field[@name='em_pole']" position="after">
+                <field name="em_departement" />
+            </xpath>
+            <xpath expr="//field[@name='em_departement']" position="after">
+                <field name="em_service" />
+            </xpath>
+            <xpath expr="//field[@name='em_service']" position="after">
+                <field name="em_equipe" />
+            </xpath>
+            <xpath expr="//field[@name='em_equipe']" position="after">
+                <field name="em_agent" />
+            </xpath>
+
+
+         <xpath expr="//field[@name='dir_gen']" position="after">
+                <button name="TestFunction" type="object" string="Confirm" class="oe_highlight" id='button_confirm'/>
+            </xpath>-->
+
+        </field>
+    </record>
+
+
+</odoo>

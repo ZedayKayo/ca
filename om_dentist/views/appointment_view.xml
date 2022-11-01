@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <!-- Kanban View -->
+    <record id="view_kanban_dentist_appointment" model="ir.ui.view">
+        <field name="name">dentist_appointment.view.kanban</field>
+        <field name="model">dentist.appointment</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="parent_id"/>
+                <field name="note"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul style="padding-left:20px; font-size:16px;">
+                                    <li style="color:red;">
+                                        <field name="parent_id"/>
+                                    </li>
+                                    <li style="color:blue;">
+                                        <field name="note"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+     <!-- Search View -->
+    <record id="view_appointment_search" model="ir.ui.view">
+        <field name="name">dentist.appointment.search</field>
+        <field name="model">dentist.appointment</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="parent_id"/>
+                <field name="note"/>
+                <separator/>
+                <group expand="1" string="Group By">
+
+                    <filter name="gender" string="Patient" context="{'group_by': 'parent_id'}" />
+
+                    <filter name="male" string="Adults" domain="[('age', '&gt;=', 18)]" />
+                    <filter name="male" string="Kids" domain="[('age', '&lt;', 18)]" />
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- Tree View -->
+    <record id="view_tree_dentist_appointment" model="ir.ui.view">
+        <field name="name">dentist.appointment.view.tree</field>
+        <field name="model">dentist.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="reference"/>
+                <field name="parent_id"/>
+                <field name="note"/>
+                <field name="date_appointment"/>
+            </tree>
+        </field>
+    </record>
+
+
+ <!-- Form View -->
+    <record id="view_form_dentist_appointment" model="ir.ui.view">
+        <field name="name">dentist.appointment.view.form</field>
+        <field name="model">dentist.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" id='button_confirm' confirm='Are you sure you that you need to confirm ?'/>
+                    <button name="action_done" type="object" string="Done" class="oe_highlight" id='button_done' states="confirm"/>
+                    <button name="action_draft" type="object" string="Draft" class="oe_highlight" id='button_draft'  states='cancel,confirm'/>
+                    <button name="action_cancel" type="object" string="Cancel"  id='button_cancel' states='draft,done,confirm'  confirm='Are you sure you that you need to cancel ?'/>
+                    <field name="state" widget="statusbar" options="{'clickable':'1','fold_field':'fold'}"/>
+                </header>
+                <sheet>
+                    <div class='oe_title'>
+                        <h1>
+
+                            <field name='reference' readonly='1'/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="parent_id"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                        </group>
+                        <group>
+                            <field name="date_appointment"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action menu -->
+    <record id="action_dentist_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">dentist.appointment</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class='o_view_nocontent_smiling_face'>Create New Appointment</p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="menu_appointments"
+        name="Appointments"
+        parent="menu_dentist"
+        action='action_dentist_appointment'
+        sequence="10"
+        />
+
+
+
+</odoo>

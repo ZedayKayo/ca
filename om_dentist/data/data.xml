@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="seq_dentist_patient" model="ir.sequence">
+            <field name="name">Patient Sequence</field>
+            <field name="code">dentist.patient</field>
+            <field name="prefix">HP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_dentist_appointment" model="ir.sequence">
+            <field name="name">Appointment Sequence</field>
+            <field name="code">dentist.appointment</field>
+            <field name="prefix">OT</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+</odoo>

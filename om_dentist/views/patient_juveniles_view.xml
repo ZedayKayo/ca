@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<!-- Action menu -->
+    <record id="action_dentist_patient_juvenile" model="ir.actions.act_window">
+        <field name="name">Juvenile Patients</field>
+        <field name="res_model">dentist.patient</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[('pat_age','&lt;',18)]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class='o_view_nocontent_smiling_face'>Create New Patient</p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_patient_juvenile"
+        name="Juvenile Patients"
+        parent="menu_patient"
+        sequence="10"
+        action="action_dentist_patient_juvenile"
+        />
+
+</odoo>

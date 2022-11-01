@@ -1,0 +1,43 @@
+from odoo import models,fields,api
+
+class HrEmployee(models.Model):
+    _inherit=['hr.employee']
+
+    em_prenom = fields.Char(string="Prénom" ,  required =True)
+    em_matricule = fields.Char(string="Matricule")
+    em_cin = fields.Char(string="N° CIN"  ,required =True)
+
+    #em_direction_generale = fields.Selection(selection=[('Direction Generale A','Direction Generale A'),('Direction Generale B','Direction Generale B')],string='Direction Generale')
+    ##if em_direction_generale == 'Direction Generale A':
+    #em_pole = fields.Selection(selection= [('Pole A','Pole B')],string='Pole')
+    #em_departement = fields.Selection(selection= [('a','a')],string='Departement')
+    #em_service = fields.Selection(selection= [('a','a')],string='Service')
+    #em_equipe = fields.Selection([('a','a')],string='Equipe')
+    #em_agent = fields.Selection([('a','a')],string='Agent')
+
+    dir_gen = fields.Many2one('direction.generale',string='Direction Generale',required=True)
+
+
+    def TestFunction(self):
+        #self.em_pole =self.em_pole.append(("new option","new option"))
+        self.em_pole = fields.Selection(selection_add=[('transgender', 'Transgender')])
+        print('nooooooooooooooooooooooooooooooooooooooooooo')
+
+class DirectionGenerale(models.Model):
+    _name = 'direction.generale'
+
+    name = fields.Selection(selection=[('Direction Generale A','Direction Generale A'),('Direction Generale B','Direction Generale B')],string='Direction Generale')
+    em_pole = fields.Selection([],string='Pole')
+    em_departement = fields.Selection(selection= [('a','a')],string='Departement')
+    em_service = fields.Selection(selection= [('a','a')],string='Service')
+    em_equipe = fields.Selection([('a','a')],string='Equipe')
+    em_agent = fields.Selection([('a','a')],string='Agent')
+
+    @api.onchange('name')
+    def onchange_name(self):
+        if self.name == 'Direction Generale A':
+            print('AB')
+            self.em_pole= fields.Selection(selection_add = [('Pole A', 'Pole A'),('Pole B', 'Pole B')])
+        elif self.name == 'Direction Generale B':
+            print('CD')
+            em_pole = fields.Selection(selection= [('Pole C', 'Pole C'),('Pole D', 'Pole D')],string='Pole')

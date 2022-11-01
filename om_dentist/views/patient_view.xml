@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <!-- Kanban View -->
+    <record id="view_kanban_dentist_patient" model="ir.ui.view">
+        <field name="name">dentist_patient.view.kanban</field>
+        <field name="model">dentist.patient</field>
+        <field name="arch" type="xml">
+            <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="pat_responsible"/>
+                    <field name="pat_age"/>
+                    <field name="pat_gender"/>
+                    <field name="pat_img"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul style="padding-left:20px; font-size:16px;">
+                                        <li style="color:red;">
+                                            <field name="name"/>
+                                        </li>
+
+                                        <img style="width:40px;height:40px;border-radius:10px">
+                                            <field name="pat_img"/>
+                                        </img>
+                                        <li>
+                                            <field name="pat_age"/>
+                                        </li>
+                                        <li>
+                                            <field name="pat_gender"/>
+                                        </li>
+                                        <li>
+                                            <field name="appointment_count"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+     <!-- Search View -->
+    <record id="view_patient_search" model="ir.ui.view">
+        <field name="name">dentist.patient.search</field>
+        <field name="model">dentist.patient</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="name"/>
+                <field name="pat_age"/>
+                <separator/>
+                <group expand="1" string="Group By">
+                    <filter name="gender" string="Gender" context="{'group_by': 'pat_gender'}" />
+                    <filter name="male" string="Male" domain="[('pat_gender', '=', 'male')]" />
+                    <filter name="female" string="Female" domain="[('pat_gender', '=', 'female')]" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- Tree View -->
+    <record id="view_tree_dentist_patient" model="ir.ui.view">
+        <field name="name">dentist_patient.view.tree</field>
+        <field name="model">dentist.patient</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="pat_responsible"/>
+                <field name="pat_age"/>
+                <field name="pat_gender"/>
+                <field name="appointment_count"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+ <!-- Form View -->
+    <record id="view_form_dentist_patient" model="ir.ui.view">
+        <field name="name">dentist_patient.view.form</field>
+        <field name="model">dentist.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" id='button_confirm' confirm='Are you sure you that you need to confirm ?'/>
+                    <button name="action_done" type="object" string="Done" class="oe_highlight" id='button_done' states="confirm"/>
+                    <button name="action_draft" type="object" string="Draft" class="oe_highlight" id='button_draft'  states='cancel,confirm'/>
+                    <button name="action_cancel" type="object" string="Cancel"  id='button_cancel' states='draft,done,confirm'  confirm='Are you sure you that you need to cancel ?'/>
+                    <field name="state" widget="statusbar" options="{'clickable':'1','fold_field':'fold'}"/>
+                </header>
+                <sheet>
+                    <div class='oe_title'>
+                        <h1>
+                            <field name='reference' readonly='1'/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="pat_responsible"/>
+                            <field name="pat_age"/>
+                        </group>
+                        <group>
+                            <field name="pat_gender"/>
+                            <field name="pat_img"/>
+                            <field name="appointment_count"/>
+                        </group>
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action menu -->
+    <record id="action_dentist_patient" model="ir.actions.act_window">
+        <field name="name">Dentist Patient</field>
+        <field name="res_model">dentist.patient</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class='o_view_nocontent_smiling_face'>Create New Patient</p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="menu_dentist"
+        name="Dentist"
+        sequence="10"
+        />
+
+    <menuitem
+        id="menu_patient"
+        name="Patients"
+        parent="menu_dentist"
+        sequence="10"
+        action='action_dentist_patient'
+        />
+
+
+</odoo>
