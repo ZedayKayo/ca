@@ -8,10 +8,16 @@
 
 
            <xpath expr="//field[@name='parent_id']" position="before">
-                    <field name="con_prenom" attrs="{'invisible': [('is_company','=', True)]}" placeholder="Entrer Prénom" style="width:100%%"/>
+                    <field name="con_prenom" attrs="{
+                                                        'invisible': [('is_company','=', True)],
+                                                        'required' : [('is_company','!=', True)]
+                                                     }" placeholder="Entrer Prénom" style="width:100%%"/>
            </xpath>
             <xpath expr="//field[@name='vat']" position="after">
-                    <field name="con_n_cin" attrs="{'invisible': [('is_company','=', True)]}"/>
+                    <field name="con_n_cin" attrs="{
+                                                        'invisible': [('is_company','=', True)],
+                                                        'required' : [('is_company','!=', True)]
+                                                    }"/>
             </xpath>
 
         </field>
